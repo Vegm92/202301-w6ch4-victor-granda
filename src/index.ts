@@ -28,7 +28,21 @@ app.get("/things/:thingId", (req, res) => {
   res.status(200).json({ thing });
 });
 
-app.post("/new-thing", () => {});
+app.delete("/things/:thingId", (req, res) => {
+  const id = req.params.thingId;
+
+  const filteredThings = knownThings.filter((thing) => thing.id !== +id);
+
+  debug(chalk.bgGreen(`Delete item with id:`, id));
+  res.status(200).json({ filteredThings });
+});
+
+// App.post("/things", (req, res) => {
+//   const thing = req.body;
+//   debug(chalk.bgGreen(`Adding new item: `, thing));
+//   knownThings.push(thing);
+//   res.status(201).json({ knownThings });
+// });
 
 app.listen(port, () => {
   debug(chalk.cyan.bold(`Server started at http://localhost:${port}`));
