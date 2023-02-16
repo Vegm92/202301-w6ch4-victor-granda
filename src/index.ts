@@ -21,9 +21,14 @@ app.get("/things", (req, res, next) => {
   next();
 });
 
-app.get("/things/:thingId", (req, res, next) => {
-  res.status(200).json();
+app.get("/things/:thingId", (req, res) => {
+  const id = req.params.thingId;
+  const thing = knownThings.find((thing) => thing.id === +id);
+
+  res.status(200).json({ thing });
 });
+
+app.post("/new-thing", () => {});
 
 app.listen(port, () => {
   debug(chalk.cyan.bold(`Server started at http://localhost:${port}`));
