@@ -5,7 +5,7 @@ export interface ThingKnownStructure {
   isFun: boolean;
   makesMoney: boolean;
 }
-type ThingsKnown = ThingKnownStructure[];
+export type ThingsKnown = ThingKnownStructure[];
 
 export const knownThings: ThingsKnown = [
   { id: 1, thing: "Tenis", category: "Sports", isFun: true, makesMoney: false },
