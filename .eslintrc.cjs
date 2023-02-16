@@ -20,5 +20,5 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
   },
-  rules: {},
+  rules: { "no-implicit-coercion": [2, { number: false }] },
 };

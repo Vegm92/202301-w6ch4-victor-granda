@@ -3,26 +3,22 @@ import express from "express";
 import createDebug from "debug";
 import chalk from "chalk";
 import morgan from "morgan";
-import { knownThings, ThingKnownStructure } from "./thingsIKnow.js";
+import { knownThingsRouter } from "./routers/thingsKnownRouters.js";
 
-const debug = createDebug("challenge-api");
-const port = process.argv[3] ?? process.env.PORT ?? 4000;
+const port = process.env.PORT ?? 4000;
+const debug = createDebug("things");
 const app = express();
 
+app.use(() => {
+  debug("Im alive");
+});
+
 app.use(morgan("dev"));
+app.use(express.json());
+app.use("/", knownThingsRouter);
 
-app.use((req, res, next) => {
-  debug("I'm Alive!");
-  next();
-});
-
-app.get("/things", (req, res, next) => {
-  res.status(200).json({ knownThings });
-  next();
-});
-
-app.get("/things/:thingId", (req, res, next) => {
-  res.status(200).json();
+app.use((req, res) => {
+  res.status(404).json({ error: "Endpoint not found!" });
 });
 
 app.listen(port, () => {
